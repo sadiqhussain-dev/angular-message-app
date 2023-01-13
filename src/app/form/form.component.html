@@ -1,0 +1,20 @@
+<mat-icon mat-dialog-close color="primary">close</mat-icon>
+<form [formGroup]="formGroup" (ngSubmit)="onMessageFormSubmit()">
+    <div class="mb-3">
+        <mat-form-field appearance="outline" color="primary">
+            <mat-label>Name</mat-label>
+            <input placeholder="Enter Name" matInput type="text" formControlName="name" />
+            <mat-error *ngIf="name?.invalid && name?.touched || (name?.errors?.['required'])">Name Is
+                Required</mat-error>
+        </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline" color="primary">
+        <mat-label>Message</mat-label>
+        <textarea placeholder="Enter Message" matInput type="text" formControlName="message"></textarea>
+        <mat-error *ngIf="messages?.invalid && messages?.touched || (messages?.errors?.['required'])">Message Is
+            Required</mat-error>
+    </mat-form-field>
+    <div class="form-group mt-2">
+        <button [disabled] = "!formGroup.valid" type="submit" mat-raised-button color="accent">Save</button>
+    </div>
+</form>

@@ -1,0 +1,10 @@
+span {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    margin-left: 10px;
+}

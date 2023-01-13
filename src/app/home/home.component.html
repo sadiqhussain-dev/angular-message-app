@@ -1,0 +1,47 @@
+<app-toolbar></app-toolbar>
+<p *ngIf="loading | async">
+    <em>
+        <mat-progress-bar class="mt-1" mode="indeterminate"></mat-progress-bar>
+        <mat-spinner [diameter]="20"></mat-spinner>
+    </em>
+</p>
+<div class="container  mt-5">
+    <mat-table *ngIf="messageList | async as messageList" [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+            <mat-cell *matCellDef="let message">
+                {{ message.id.slice(0, 100) }}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>
+                Name
+            </mat-header-cell>
+            <mat-cell *matCellDef="let message">
+                {{ message.name.slice(0, 100) }}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="message">
+            <mat-header-cell *matHeaderCellDef>
+                Message
+            </mat-header-cell>
+            <mat-cell *matCellDef="let message">
+                {{ message.message.slice(0, 100) }}
+            </mat-cell>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="created_at">
+            <mat-header-cell *matHeaderCellDef>
+                Craeted
+            </mat-header-cell>
+            <mat-cell *matCellDef="let message">
+                {{ message.created_at }}
+            </mat-cell>
+        </ng-container> -->
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+</div>
