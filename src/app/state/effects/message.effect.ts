@@ -4,12 +4,18 @@ import { MessageService } from "src/app/services/message.service";
 import { mergeMap, map, catchError, switchMap } from "rxjs/operators";
 import * as MessageActions from 'src/app/state/actions/message.action';
 import { of } from 'rxjs';
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatDialog } from "@angular/material/dialog";
+import { Router } from "@angular/router";
 
 @Injectable()
 
 export class MessageEffect {
     constructor(
+        private router: Router,
         private actions: Actions,
+        private dialog: MatDialog,
+        private snackBar: MatSnackBar,
         private messageService: MessageService
     ) { }
 
@@ -30,10 +36,23 @@ export class MessageEffect {
             ofType(MessageActions.AddMessage),
             mergeMap(({ message }) =>
                 of(this.messageService.saveMessage(message)).pipe(
-                    map(() => MessageActions.AddMessageSuccess({ message })),
+                    map(() => MessageActions.AddMessageSuccess({ message }), this.displaySnakeBarMessage("Message saved", true)),
                     catchError(error => of(MessageActions.AddMessageFailure({ error })))
                 ),
             )
         )
     )
+
+    displaySnakeBarMessage(message: string, success: boolean): void
+    {
+        this.snackBar.open(message);
+        this.dialog.closeAll();
+        
+        if(success)
+            this.router.navigateByUrl('/')
+  
+        setTimeout(() => {
+          this.snackBar.dismiss()
+        }, 5000);
+    }
 }
