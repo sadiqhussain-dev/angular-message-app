@@ -73,9 +73,4 @@ export const getMessages = createSelector(
     (state: MessageState) => state.list
 );
 
-export const getMessageByID = createSelector(
-    getMessageFeatureState,
-    (state: MessageState) => state.list[0]
-);
-
 export { Message };

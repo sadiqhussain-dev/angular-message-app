@@ -9,16 +9,16 @@ import { Message } from "src/models/Message";
 })
 export class MessageService {
 
-  constructor(private messagesList: AngularFirestore) { }
+  constructor(private fireStore: AngularFirestore) { }
 
   saveMessage(message: Message) {
     const messageData = JSON.parse(JSON.stringify(message));
-    return this.messagesList.collection("messages").add(messageData);
+    return this.fireStore.collection("messages").add(messageData);
   }
 
   getAllMessages(): Observable<Message[]> {
 
-    const messages = this.messagesList
+    const messages = this.fireStore
       .collection<Message>("messages", (ref) => ref.orderBy("created_at"))
       .snapshotChanges()
       .pipe(
